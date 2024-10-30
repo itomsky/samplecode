@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="welcome">
+    <h1 class="title">サンプルコード共有</h1>
+    <p class="subtitle">便利なサンプルコードを共有しましょう</p>
+    <a class="btn btn-primary" href="{% url 'samples_new' %}">サンプルコードを投稿する</a>
+</div>
+
+{% if samples %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>投稿者</th>
+        <th>投稿日</th>
+        <th>タイトル</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for sample in samples %}
+    <tr>
+        <th>{{ sample.created_by.username }}</th>
+        <th>{{ sample.created_at }}</th>
+        <th><a href="{% url 'samples_detail' sample.id %}">{{ sample.title }}</a></th>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>スニペットはまだ投稿されていません。</p>
+{% endif %}
+{% endblock %}

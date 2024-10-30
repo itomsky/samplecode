@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load pygmentize %}
+
+{% block extraheader %}
+<style>{% pygments_css %}</style>
+{% endblock %}
+
+{% block main %}
+<h2>{{ samples.title }}</h2>
+
+<div>
+    投稿者: {{ samples.created_by.username }}
+</div>
+
+<div class="samples-date">
+    投稿日: {{ samples.created_at|date:"DATETIME_FORMAT" }}
+    {% if user.is_authenticated and samples.created_by_id == user.id %}
+    <a href="{% url 'samples_edit' samples.id %}">編集</a>
+    {% endif %}
+</div>
+
+<div class="source-code">
+    {{ samples.code|pygmentize:"python3" }}
+</div>
+
+<p>{{ samples.description|linebreaks }}</p>
+
+{% endblock %}
